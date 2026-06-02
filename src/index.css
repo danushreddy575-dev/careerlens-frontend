@@ -1,0 +1,109 @@
+body {
+  margin: 0;
+  font-family: Arial;
+}
+
+.nav {
+  background: #222;
+  color: white;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  padding: 16px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+}
+.nav a {
+  color: white;
+  text-decoration: none;
+}
+
+.container {
+  padding: 20px;
+}
+
+.card {
+  border: 1px solid #ddd;
+
+  padding: 15px;
+
+  margin: 15px 0;
+
+  border-radius: 10px;
+}
+
+.search,
+select,
+button {
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.pagination {
+  display: flex;
+
+  gap: 15px;
+
+  margin-top: 20px;
+}
+
+.error {
+  color: red;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    flex-direction: column;
+  }
+
+  .nav-links {
+    margin-top: 10px;
+  }
+}
+.progress {
+  width: 100%;
+
+  background: #ddd;
+
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+.fill {
+  background: green;
+
+  color: white;
+
+  padding: 10px;
+}
+
+.good {
+  background: #ddffdd;
+
+  padding: 8px;
+
+  margin: 5px;
+
+  display: inline-block;
+}
+
+.bad {
+  background: #ffd6d6;
+
+  padding: 8px;
+
+  margin: 5px;
+
+  display: inline-block;
+}
