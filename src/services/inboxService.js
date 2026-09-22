@@ -59,3 +59,15 @@ export const getFilteredJobs =
     return res.data;
 
 };
+
+export const syncGmail =
+  async () => {
+
+    const res =
+      await API.get(
+        "/api/gmail/emails"
+      );
+
+    return res.data;
+
+};

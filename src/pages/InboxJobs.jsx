@@ -14,7 +14,8 @@ import {
   getGmailStatus,
   getTrustedJobs,
   getReviewJobs,
-  getFilteredJobs
+  getFilteredJobs,
+  syncGmail
 } from "../services/inboxService";
 
 export default function InboxJobs() {
@@ -38,6 +39,10 @@ export default function InboxJobs() {
   const [notice,
     setNotice] =
       useState("");
+
+  const [syncing,
+    setSyncing] =
+      useState(false);
 
   const startGmailConnect =
     async () => {
@@ -122,6 +127,37 @@ export default function InboxJobs() {
 
         setLoading(false);
 
+      }
+
+    };
+
+  const runSync =
+    async () => {
+
+      try {
+        setSyncing(true);
+        setNotice(
+          "Syncing Gmail. This may take a moment..."
+        );
+
+        const data =
+          await syncGmail();
+
+        setNotice(
+          `Gmail sync completed. ${data.count || 0} emails checked.`
+        );
+
+        await loadStatus();
+        await loadJobs();
+
+      } catch (err) {
+        console.error(err);
+        setNotice(
+          err?.response?.data?.message ||
+          "Gmail sync failed. Please try again."
+        );
+      } finally {
+        setSyncing(false);
       }
 
     };
@@ -219,7 +255,7 @@ export default function InboxJobs() {
 
           ) : (
 
-            <div className="connection-strip">
+          <div className="connection-strip">
               <span>
                 Connected Gmail
               </span>
@@ -232,6 +268,17 @@ export default function InboxJobs() {
                   gmailStatus.inboxEmail
                 }
               </a>
+              <button
+                className="btn btn-secondary"
+                onClick={runSync}
+                disabled={syncing}
+              >
+                {
+                  syncing
+                    ? "Syncing..."
+                    : "Sync Gmail"
+                }
+              </button>
             </div>
 
           )
@@ -302,6 +349,17 @@ export default function InboxJobs() {
               <p>
                 Run Gmail sync or check a different inbox category.
               </p>
+              <button
+                className="btn btn-primary"
+                onClick={runSync}
+                disabled={syncing}
+              >
+                {
+                  syncing
+                    ? "Syncing..."
+                    : "Sync Gmail"
+                }
+              </button>
             </div>
 
           ) : (
