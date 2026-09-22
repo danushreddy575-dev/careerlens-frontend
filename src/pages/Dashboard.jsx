@@ -1,65 +1,75 @@
-import { useEffect, useState }
-from "react";
+import {
+  useEffect,
+  useState
+} from "react";
 
 import Navbar
 from "../components/Navbar";
 
 import {
   getDashboardSummary
-}
-from "../services/dashboardService";
+} from "../services/dashboardService";
+
+const StatCard = ({
+  title,
+  value,
+  detail
+}) => (
+  <div className="metric-card">
+    <p className="metric-label">
+      {title}
+    </p>
+
+    <h2 className="metric-value">
+      {value}
+    </h2>
+
+    {
+      detail && (
+        <p className="metric-detail">
+          {detail}
+        </p>
+      )
+    }
+  </div>
+);
 
 export default function Dashboard() {
-
   const [summary, setSummary] =
     useState(null);
 
   const [loading, setLoading] =
     useState(true);
 
-  useEffect(() => {
-
-    loadDashboard();
-
-  }, []);
-
   const loadDashboard =
     async () => {
-
       try {
-
         const data =
           await getDashboardSummary();
 
         setSummary(data);
-
-      }
-
-      catch (err) {
-
+      } catch (err) {
         console.log(err);
-
-      }
-
-      finally {
-
+      } finally {
         setLoading(false);
-
       }
-
     };
 
-  if (loading) {
+  useEffect(() => {
+    loadDashboard();
+  }, []);
 
+  if (loading) {
     return (
       <>
         <Navbar />
         <div className="container">
-          Loading...
+          <div className="skeleton-page">
+            Loading dashboard...
+          </div>
         </div>
       </>
     );
-
   }
 
   return (
@@ -67,162 +77,147 @@ export default function Dashboard() {
       <Navbar />
 
       <div className="container">
+        <section className="page-header">
+          <p className="eyebrow">
+            Personal command center
+          </p>
+          <h1>
+            CareerLens Dashboard
+          </h1>
+          <p>
+            Track market coverage, inbox opportunities, source quality, and the next action that matters most.
+          </p>
+        </section>
 
-        <h1>
-          CareerLens Dashboard
-        </h1>
+        <div className="analytics-grid">
+          <StatCard
+            title="Market Jobs"
+            value={summary.marketJobs || 0}
+            detail="Live opportunities across connected sources"
+          />
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns:
-              "repeat(auto-fit,minmax(220px,1fr))",
-            gap: "20px",
-            marginTop: "20px"
-          }}
-        >
+          <StatCard
+            title="Top Location"
+            value={
+              summary.market?.topLocation?.location ||
+              "No jobs yet"
+            }
+            detail={`${summary.market?.topLocation?.count || 0} matching jobs`}
+          />
 
-          <div className="card">
-            <h3>Applications</h3>
+          <StatCard
+            title="Apply Coverage"
+            value={`${summary.market?.applyLinkCoverage?.percentage || 0}%`}
+            detail={`${summary.market?.applyLinkCoverage?.withLinks || 0} jobs with apply links`}
+          />
 
-            <p>
-              Applied:
-              {" "}
-              {
-                summary.applications
-                  .applied
-              }
-            </p>
-
-            <p>
-              Interviews:
-              {" "}
-              {
-                summary.applications
-                  .interviews
-              }
-            </p>
-
-            <p>
-              Accepted:
-              {" "}
-              {
-                summary.applications
-                  .accepted
-              }
-            </p>
-
-            <p>
-              Rejected:
-              {" "}
-              {
-                summary.applications
-                  .rejected
-              }
-            </p>
-
-          </div>
-
-          <div className="card">
-
-            <h3>
-              Inbox Health
-            </h3>
-
-            <p>
-              Trusted:
-              {" "}
-              {
-                summary.inbox
-                  .trusted
-              }
-            </p>
-
-            <p>
-              Review:
-              {" "}
-              {
-                summary.inbox
-                  .review
-              }
-            </p>
-
-            <p>
-              Filtered:
-              {" "}
-              {
-                summary.inbox
-                  .filtered
-              }
-            </p>
-
-          </div>
-
-          <div className="card">
-
-            <h3>
-              Market Jobs
-            </h3>
-
-            <p>
-              {
-                summary.marketJobs
-              }
-            </p>
-
-          </div>
-
+          <StatCard
+            title="Inbox Opportunities"
+            value={summary.inbox?.trusted || 0}
+            detail={`${summary.inbox?.highPriority || 0} high priority`}
+          />
         </div>
 
-        <div
-          style={{
-            marginTop: "30px"
-          }}
-        >
+        <div className="analytics-grid two-column">
+          <div className="panel">
+            <h3>
+              Job Source Mix
+            </h3>
 
-          <h2>
-            Recent Activity
-          </h2>
-
-          {
-            summary.recentActivity
-              ?.map(
-                activity => (
-
+            {
+              summary.market
+                ?.sourceMix
+                ?.map(item => (
                   <div
-                    key={
-                      activity._id
-                    }
+                    className="analytics-row"
+                    key={item.source}
                   >
-
+                    <span>
+                      {item.source}
+                    </span>
                     <strong>
-                      {
-                        activity.company
-                      }
+                      {item.count}
                     </strong>
-
-                    {" - "}
-
-                    {
-                      activity.role
-                    }
-
-                    {" - "}
-
-                    {
-                      activity.status
-                    }
-
                   </div>
+                ))
+            }
+          </div>
 
-                )
-              )
-          }
+          <div className="panel">
+            <h3>
+              Experience Mix
+            </h3>
 
+            {
+              summary.market
+                ?.experienceMix
+                ?.map(item => (
+                  <div
+                    className="analytics-row"
+                    key={item.level}
+                  >
+                    <span>
+                      {item.level}
+                    </span>
+                    <strong>
+                      {item.count}
+                    </strong>
+                  </div>
+                ))
+            }
+          </div>
         </div>
 
+        <div className="analytics-grid two-column">
+          <div className="panel">
+            <h3>
+              Inbox Email
+            </h3>
+
+            {
+              summary.inbox
+                ?.gmailConnected ? (
+                <>
+                  <p>
+                    Connected Gmail
+                  </p>
+
+                  <p className="connected-email">
+                    <a
+                      href={
+                        `mailto:${summary.inbox.inboxEmail}`
+                      }
+                    >
+                      {summary.inbox.inboxEmail}
+                    </a>
+                  </p>
+
+                  <p>
+                    Average opportunity score:{" "}
+                    <strong>
+                      {summary.inbox.avgOpportunityScore || 0}
+                    </strong>
+                  </p>
+                </>
+              ) : (
+                <div className="empty-inline">
+                  Not Connected
+                </div>
+              )
+            }
+          </div>
+
+          <div className="panel action-panel">
+            <h3>
+              Recommended Action
+            </h3>
+
+            <p>
+              {summary.recommendedAction}
+            </p>
+          </div>
+        </div>
       </div>
     </>
   );
-
 }

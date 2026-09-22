@@ -2,19 +2,49 @@ export default function ActionButton({
   link
 }) {
 
+  const getSafeLink = () => {
+    if (!link) return "";
+
+    try {
+      const cleaned =
+        String(link)
+          .trim()
+          .replace(/[)\].,;!?]+$/g, "");
+
+      const url = new URL(cleaned);
+
+      if (
+        !["http:", "https:"]
+          .includes(url.protocol)
+      ) {
+        return "";
+      }
+
+      return url.href;
+    } catch (err) {
+      return "";
+    }
+  };
+
   const handleClick = () => {
 
-    if (link) {
+    const safeLink =
+      getSafeLink();
+
+    if (safeLink) {
 
     window.open(
-        link,
-        "_blank"
+        safeLink,
+        "_blank",
+        "noopener,noreferrer"
     );
 
     } else {
 
     alert(
-        "Review Email feature coming soon"
+        link
+          ? "This saved link is invalid. Please resync Gmail to refresh the opportunity link."
+          : "Review Email feature coming soon"
     );
 
     }
@@ -24,6 +54,7 @@ export default function ActionButton({
   return (
 
     <button
+      className="btn btn-secondary"
       onClick={handleClick}
     >
 

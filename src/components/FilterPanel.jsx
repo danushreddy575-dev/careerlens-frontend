@@ -1,16 +1,60 @@
 export default function FilterPanel({
-  filter,
-  setFilter
+  location,
+  setLocation,
+  experienceLevel,
+  setExperienceLevel
 }) {
   return (
-    <select
-      value={filter}
-      onChange={(e) => setFilter(e.target.value)}
-    >
-      <option value="">All</option>
-      <option value="remote">Remote</option>
-      <option value="hybrid">Hybrid</option>
-      <option value="onsite">Onsite</option>
-    </select>
+    <div className="job-filters">
+      <label className="field">
+        <span>
+          Location priority
+        </span>
+        <input
+          placeholder="Bangalore, Hyderabad, Pune..."
+          value={location}
+          onChange={(e) =>
+            setLocation(e.target.value)
+          }
+        />
+      </label>
+
+      <label className="field">
+        <span>
+          Experience
+        </span>
+        <select
+          value={experienceLevel}
+          onChange={(e) =>
+            setExperienceLevel(e.target.value)
+          }
+        >
+          <option value="">
+            All Experience
+          </option>
+          <option value="Internship">
+            Internship
+          </option>
+          <option value="Entry Level">
+            Entry Level
+          </option>
+          <option value="Junior">
+            Junior
+          </option>
+          <option value="Mid Level">
+            Mid Level
+          </option>
+          <option value="Senior">
+            Senior
+          </option>
+          <option value="Lead/Manager">
+            Lead/Manager
+          </option>
+          <option value="Not Specified">
+            Not Specified
+          </option>
+        </select>
+      </label>
+    </div>
   );
 }

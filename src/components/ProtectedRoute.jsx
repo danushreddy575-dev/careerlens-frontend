@@ -1,6 +1,8 @@
 import {
-Navigate
-} from "react-router-dom";
+useState
+} from "react";
+
+import AuthModal from "./AuthModal";
 
 export default function ProtectedRoute({
 children
@@ -9,8 +11,20 @@ children
 const token=
 localStorage.getItem("token");
 
-return token
-? children
-: <Navigate to="/login"/>;
+const [authenticated,setAuthenticated]=
+useState(Boolean(token));
+
+if(authenticated){
+return children;
+}
+
+return(
+<AuthModal
+showClose={false}
+onSuccess={()=>
+setAuthenticated(true)
+}
+/>
+);
 
 }

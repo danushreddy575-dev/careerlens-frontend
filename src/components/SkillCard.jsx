@@ -4,14 +4,14 @@ export default function SkillCard({
   type
 }) {
   return (
-    <div className="card">
+    <div className="panel">
       <h3>{title}</h3>
       <div>
         {skills?.map((skill) => (
           <span
             key={skill}
             className={
-              type
+              `skill-chip ${type}`
             }
           >
             {skill}

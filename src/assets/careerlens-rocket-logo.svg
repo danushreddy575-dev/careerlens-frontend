@@ -1,0 +1,75 @@
+<svg width="360" height="420" viewBox="0 0 360 420" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="rocketBody" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#e7f7f3"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#14b8a6"/>
+      <stop offset="1" stop-color="#0f766e"/>
+    </linearGradient>
+    <linearGradient id="fire" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#facc15"/>
+      <stop offset="0.45" stop-color="#f97316"/>
+      <stop offset="1" stop-color="#dc2626"/>
+    </linearGradient>
+    <filter id="softShadow" x="-35%" y="-35%" width="170%" height="170%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#0f172a" flood-opacity="0.16"/>
+    </filter>
+    <style>
+      .rocket-outline { fill: url(#rocketBody); stroke: #0f766e; stroke-width: 7; stroke-linejoin: round; }
+      .window { fill: #dff7f2; stroke: #0f766e; stroke-width: 6; }
+      .fin { fill: #2563eb; stroke: #1e3a8a; stroke-width: 5; stroke-linejoin: round; }
+      .fin-highlight { fill: #60a5fa; opacity: 0.9; }
+      .fire-main { fill: url(#fire); }
+      .fire-inner { fill: #fff7ad; opacity: 0.95; }
+      .smoke { fill: #dbe7e3; opacity: 0.9; }
+      .ground { fill: #e7f0ec; stroke: #cbd8d4; stroke-width: 3; }
+      .brand { font: 900 38px Arial, sans-serif; fill: #172026; letter-spacing: 0; }
+      .tag { font: 700 13px Arial, sans-serif; fill: #64748b; }
+      .suit { fill: #172026; }
+      .shirt { fill: #ffffff; }
+      .tie { fill: #0f766e; }
+      .skin { fill: #f2c7a7; }
+      .hair { fill: #2a1c14; }
+    </style>
+  </defs>
+
+  <g filter="url(#softShadow)">
+    <ellipse class="ground" cx="180" cy="292" rx="116" ry="20"/>
+    <circle class="smoke" cx="114" cy="283" r="18"/>
+    <circle class="smoke" cx="144" cy="296" r="24"/>
+    <circle class="smoke" cx="180" cy="300" r="25"/>
+    <circle class="smoke" cx="216" cy="296" r="24"/>
+    <circle class="smoke" cx="246" cy="283" r="18"/>
+
+    <path class="fire-main" d="M148 226 C132 249 142 274 180 298 C218 274 228 249 212 226 C202 239 192 250 180 262 C168 250 158 239 148 226 Z"/>
+    <path class="fire-inner" d="M168 238 C158 256 164 276 180 290 C196 276 202 256 192 238 C187 248 184 255 180 262 C176 255 173 248 168 238 Z"/>
+
+    <path class="rocket-outline" d="M180 30 C229 60 245 126 214 225 L146 225 C115 126 131 60 180 30 Z"/>
+    <path class="fin" d="M147 205 C132 222 118 242 106 261 C128 251 145 243 158 237 C154 226 151 216 147 205 Z"/>
+    <path class="fin-highlight" d="M140 222 C132 233 124 244 118 253 C130 247 140 243 149 239 C146 233 143 228 140 222 Z"/>
+    <path class="fin" d="M213 205 C228 222 242 242 254 261 C232 251 215 243 202 237 C206 226 209 216 213 205 Z"/>
+    <path class="fin-highlight" d="M220 222 C228 233 236 244 242 253 C230 247 220 243 211 239 C214 233 217 228 220 222 Z"/>
+    <path d="M180 30 C199 42 213 60 223 82 C210 75 195 71 180 71 C165 71 150 75 137 82 C147 60 161 42 180 30 Z" fill="url(#teal)"/>
+
+    <circle class="window" cx="180" cy="128" r="34"/>
+    <clipPath id="windowClip">
+      <circle cx="180" cy="128" r="29"/>
+    </clipPath>
+    <g clip-path="url(#windowClip)">
+      <rect x="151" y="116" width="58" height="49" fill="#c8f3ec"/>
+      <circle class="skin" cx="180" cy="123" r="12"/>
+      <path class="hair" d="M168 121 C170 109 182 105 192 112 C196 115 196 120 195 124 C188 119 179 117 168 121 Z"/>
+      <path class="suit" d="M154 159 C159 143 169 138 180 138 C191 138 201 143 206 159 L206 168 L154 168 Z"/>
+      <path class="shirt" d="M171 141 L180 160 L189 141 C186 139 183 138 180 138 C177 138 174 139 171 141 Z"/>
+      <path class="tie" d="M178 146 L182 146 L185 164 L180 170 L175 164 Z"/>
+      <circle cx="176" cy="124" r="1.7" fill="#172026"/>
+      <circle cx="184" cy="124" r="1.7" fill="#172026"/>
+      <path d="M175 130 C178 133 182 133 185 130" fill="none" stroke="#8b4b2d" stroke-width="1.8" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <text x="180" y="355" text-anchor="middle" class="brand">CareerLens</text>
+  <text x="180" y="380" text-anchor="middle" class="tag">Launch your career with clarity</text>
+</svg>

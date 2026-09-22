@@ -1,14 +1,35 @@
-import axios from "axios";
+import API from "../api/api";
 
-const API_URL =
-  "http://localhost:5000/api/gmail";
+export const getGmailStatus =
+  async () => {
+
+    const res =
+      await API.get(
+        "/api/gmail/status"
+      );
+
+    return res.data;
+
+};
+
+export const connectGmail =
+  async () => {
+
+    const res =
+      await API.get(
+        "/api/gmail/connect"
+      );
+
+    return res.data;
+
+};
 
 export const getTrustedJobs =
   async () => {
 
     const res =
-      await axios.get(
-        `${API_URL}/inbox/trusted`
+      await API.get(
+        "/api/gmail/inbox/trusted"
       );
 
     return res.data;
@@ -19,8 +40,8 @@ export const getReviewJobs =
   async () => {
 
     const res =
-      await axios.get(
-        `${API_URL}/inbox/review`
+      await API.get(
+        "/api/gmail/inbox/review"
       );
 
     return res.data;
@@ -31,8 +52,8 @@ export const getFilteredJobs =
   async () => {
 
     const res =
-      await axios.get(
-        `${API_URL}/inbox/filtered`
+      await API.get(
+        "/api/gmail/inbox/filtered"
       );
 
     return res.data;

@@ -1,16 +1,10 @@
-import axios from "axios";
-
-const API_URL =
-  "http://localhost:5000/api/dashboard";
+import API from "../api/api";
 
 export const getDashboardSummary =
   async () => {
-
     const res =
-      await axios.get(
-        `${API_URL}/summary`
+      await API.get(
+        "/api/dashboard/summary"
       );
-
     return res.data;
-
   };

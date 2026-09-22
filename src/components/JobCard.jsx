@@ -1,15 +1,77 @@
-export default function JobCard({ job, onSave }) {
+export default function JobCard({
+  job,
+  onSave,
+  onApply
+}) {
+  const sourceLabel =
+    job.source === "adzuna"
+      ? "Adzuna"
+      : job.source === "jsearch" ||
+        job.source === "JSearch"
+        ? "JSearch"
+        : job.source || "Manual";
+
   return (
-    <div className="card">
-      <h3>{job.title}</h3>
+    <article className="job-card">
+      <div className="job-card-main">
+        <div>
+          <div className="job-card-top">
+            <span className="source-badge">
+              {sourceLabel}
+            </span>
+            <span className="pill">
+              {job.experienceLevel || "Not Specified"}
+            </span>
+          </div>
 
-      <p>{job.company}</p>
+          <h3>
+            {job.title}
+          </h3>
 
-      <p>{job.location}</p>
+          <div className="job-meta">
+            <span>
+              {job.company || "Company not listed"}
+            </span>
+            <span>
+              {job.location || "Location not listed"}
+            </span>
+          </div>
 
-      <button onClick={() => onSave(job._id)}>
-        Save
-      </button>
-    </div>
+          {
+            job.description && (
+              <p className="job-summary">
+                {
+                  job.description.length > 220
+                    ? `${job.description.slice(0, 220)}...`
+                    : job.description
+                }
+              </p>
+            )
+          }
+        </div>
+
+        <div className="job-actions">
+          {
+            job.applyLink && (
+            <button
+              className="btn btn-primary"
+              onClick={() =>
+                onApply(job)
+              }
+            >
+              Apply Now
+            </button>
+            )
+          }
+
+          <button
+            className="btn btn-secondary"
+            onClick={() => onSave(job._id)}
+          >
+            Save Job
+          </button>
+        </div>
+      </div>
+    </article>
   );
 }
